@@ -31,7 +31,7 @@ public class NumberFinder implements ValueFinder {
 
     private Integer getFirstNumber(String inputString) {
         for (int i = 0; i < inputString.length(); i++) {
-            for (int j = i; j < inputString.length(); j++) {
+            for (int j = i; j <= inputString.length(); j++) {
                 String substring = inputString.substring(i, j);
                 if (substringMap.containsKey(substring)) {
                     return substringMap.get(substring);
@@ -59,7 +59,7 @@ public class NumberFinder implements ValueFinder {
         Integer last = getLastNumber(inputString);
 
         if (first == null || last == null) {
-            throw new IllegalArgumentException("Could not find any number");
+            throw new IllegalArgumentException("Could not find any number in string:" + inputString);
         }
 
         return (first * 10) + last;

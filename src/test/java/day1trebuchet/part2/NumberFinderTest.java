@@ -23,7 +23,9 @@ class NumberFinderTest {
             "xtwone3four,       24",
             "4nineeightseven2,  42",
             "zoneight234,       14",
-            "7pqrstsixteen,     76"
+            "7pqrstsixteen,     76",
+            "dlrczxpfxp1,       11",
+            "4asdfasdfasdf,     44"
     })
     public void testGetValueForString(String inputString, int expectedValue) {
         int calculatedValue = numberFinder.getValueForString(inputString);
