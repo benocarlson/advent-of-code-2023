@@ -1,12 +1,10 @@
 package day1trebuchet.part2;
 
-import day1trebuchet.part1.DigitFinder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class NumberFinderTest {
 
