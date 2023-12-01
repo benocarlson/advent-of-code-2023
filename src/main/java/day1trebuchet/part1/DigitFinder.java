@@ -1,8 +1,10 @@
-package day1trebuchet;
+package day1trebuchet.part1;
 
-public class DigitFinder {
+import day1trebuchet.ValueFinder;
 
-    private static Character findFirstDigit(String inputString) {
+public class DigitFinder implements ValueFinder {
+
+    private Character findFirstDigit(String inputString) {
         for (Character c : inputString.toCharArray()) {
             if (Character.isDigit(c)) {
                 return c;
@@ -11,7 +13,7 @@ public class DigitFinder {
         return null;
     }
 
-    private static Character findLastDigit(String inputString) {
+    private Character findLastDigit(String inputString) {
         String reverseInputString = new StringBuilder(inputString).reverse().toString();
         for (Character c : reverseInputString.toCharArray()) {
             if (Character.isDigit(c)) {
@@ -21,7 +23,8 @@ public class DigitFinder {
         return null;
     }
 
-    public static int getValueForString(String inputString) throws IllegalArgumentException {
+    @Override
+    public int getValueForString(String inputString) throws IllegalArgumentException {
         Character first = findFirstDigit(inputString);
         Character last = findLastDigit(inputString);
 

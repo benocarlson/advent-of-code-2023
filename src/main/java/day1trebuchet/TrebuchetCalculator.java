@@ -1,10 +1,18 @@
 package day1trebuchet;
 
+import day1trebuchet.part1.DigitFinder;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class TrebuchetCalculator {
+
+    private final ValueFinder valueFinder;
+
+    public TrebuchetCalculator(ValueFinder valueFinder) {
+        this.valueFinder = valueFinder;
+    }
 
     public int calculateFromFile(String fileName) throws FileNotFoundException {
         File file = new File(fileName);
@@ -13,7 +21,7 @@ public class TrebuchetCalculator {
 
         int total = 0;
         while (scanner.hasNextLine()) {
-            total += DigitFinder.getValueForString(scanner.nextLine());
+            total += valueFinder.getValueForString(scanner.nextLine());
         }
 
         return total;

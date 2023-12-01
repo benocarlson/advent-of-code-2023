@@ -1,11 +1,20 @@
 package day1trebuchet;
 
+import day1trebuchet.part1.DigitFinder;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DigitFinderTest {
+
+    private DigitFinder digitFinder;
+
+    @BeforeEach
+    public void setup() {
+        digitFinder = new DigitFinder();
+    }
 
     @ParameterizedTest
     @CsvSource({
@@ -19,7 +28,7 @@ class DigitFinderTest {
             "172738465,                 15"
     })
     public void testGetValueForString(String inputString, int expectedValue) {
-        int calculatedValue = DigitFinder.getValueForString(inputString);
+        int calculatedValue = digitFinder.getValueForString(inputString);
         assertThat(calculatedValue).isEqualTo(expectedValue);
     }
 }
