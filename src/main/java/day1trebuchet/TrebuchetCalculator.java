@@ -1,7 +1,5 @@
 package day1trebuchet;
 
-import day1trebuchet.part1.DigitFinder;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
