@@ -7,8 +7,8 @@ import java.util.Map;
 public class NumberFinder implements ValueFinder {
 
     private final Map<String, Integer> substringMap = Map.ofEntries(
-            Map.entry("0", 0),
-            Map.entry("zero", 0),
+            Map.entry("0", 0),   // this doesn't actually use zero anywhere as far as I can see.
+            Map.entry("zero", 0),// they could have made this a lot meaner, and I'd need more unit tests.
             Map.entry("1", 1),
             Map.entry("one", 1),
             Map.entry("2", 2),
@@ -26,11 +26,11 @@ public class NumberFinder implements ValueFinder {
             Map.entry("8", 8),
             Map.entry("eight", 8),
             Map.entry("9", 9),
-            Map.entry("nine", 9)
-    );
-
+            Map.entry("nine", 9)   // there's probably already a utility somewhere for mapping spelled out numbers.
+    );                                   // maybe I'll go looking for it.
+                                         // EDIT: ChatGpt says there isn't a built-in one and actually recommends doing what I did
     private Integer getFirstNumber(String inputString) {
-        for (int i = 0; i < inputString.length(); i++) {
+        for (int i = 0; i < inputString.length(); i++) {      // I hate how unreadable this is. Very prone to bugs.
             for (int j = i; j <= inputString.length(); j++) {
                 String substring = inputString.substring(i, j);
                 if (substringMap.containsKey(substring)) {
@@ -42,9 +42,9 @@ public class NumberFinder implements ValueFinder {
     }
 
     private Integer getLastNumber(String inputString) {
-        for (int i = inputString.length(); i >= 0; i--) {
-            for (int j = i - 1; j >= 0; j--) {
-                String substring = inputString.substring(j, i);
+        for (int i = inputString.length(); i >= 0; i--) {        // yeah, this one got me at first. Had to add additional
+            for (int j = i - 1; j >= 0; j--) {                   // tests because we missed the number in the source file
+                String substring = inputString.substring(j, i);  // due to a bug here
                 if (substringMap.containsKey(substring)) {
                     return substringMap.get(substring);
                 }
