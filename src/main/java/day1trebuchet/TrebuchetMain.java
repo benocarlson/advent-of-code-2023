@@ -23,7 +23,9 @@ public class TrebuchetMain {
             case "part2" -> valueFinder = new NumberFinder();
             default -> {
                 System.out.println("Invalid argument: " + part);
-                System.out.println("Valid arguments are [part1] and [part2]");
+                System.out.println("Valid arguments are: ");
+                System.out.println("\tpart1\t calculate based on numerals only");
+                System.out.println("\tpart2\t calculate based on numerals or spelled out numbers");
                 return;
             }
         }
