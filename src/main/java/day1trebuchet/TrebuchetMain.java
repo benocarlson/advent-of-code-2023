@@ -37,7 +37,9 @@ public class TrebuchetMain {
 
         TrebuchetCalculator calculator = new TrebuchetCalculator(valueFinder);
         try {
-            System.out.println(calculator.calculateFromFile(fileName));
+            int solution = calculator.calculateFromFile(fileName);
+            System.out.println("Solving " + part + " with input file: " + fileName);
+            System.out.println("Solution: " + solution);
         } catch (FileNotFoundException e) {
             System.out.println("Could not find file: " + fileName);
         }
