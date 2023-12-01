@@ -24,7 +24,7 @@ public class DigitFinder implements ValueFinder {
     }
 
     @Override
-    public int getValueForString(String inputString) throws IllegalArgumentException {
+    public int getValueForString(String inputString) {
         Character first = findFirstDigit(inputString);
         Character last = findLastDigit(inputString);
 
