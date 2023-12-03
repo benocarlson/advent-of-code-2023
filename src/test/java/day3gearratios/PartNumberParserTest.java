@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GearParserTest {
+class PartNumberParserTest {
     private final List<String> testList = List.of(
             "467..114..",
             "...*......",
@@ -33,14 +33,14 @@ class GearParserTest {
             "8, 6, 10, true"
     })
     public void gearParserFindsAdjacentSymbolsCorrectly(int row, int startColumn, int endColumn, boolean expectedResult) {
-        boolean result = new GearParser().rangeHasAdjacentSymbol(row, startColumn, endColumn, testList);
+        boolean result = new PartNumberParser().rangeHasAdjacentSymbol(row, startColumn, endColumn, testList);
 
         assertThat(result).isEqualTo(expectedResult);
     }
 
     @Test
     public void gearParserRetrievesListOfPartNumbers() {
-        List<Integer> result = new GearParser().parsePartNumbers(testList);
+        List<Integer> result = new PartNumberParser().parsePartNumbers(testList);
 
         assertThat(result).containsExactly(467, 35, 633, 617, 592, 755, 664, 598);
     }

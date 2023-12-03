@@ -10,7 +10,7 @@ public class GearPart1Main {
     public static void main(String[] args) {
         try {
             List<String> inputLines = FileUtils.getLinesFromFile(INPUT_FILE);
-            int sum = new GearParser().parsePartNumbers(inputLines).stream().mapToInt(val -> val).sum();
+            int sum = new PartNumberParser().parsePartNumbers(inputLines).stream().mapToInt(val -> val).sum();
 
             System.out.println("Result: " + sum);
         } catch (FileNotFoundException e) {

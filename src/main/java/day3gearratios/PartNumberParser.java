@@ -3,7 +3,7 @@ package day3gearratios;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GearParser {
+public class PartNumberParser {
 
     public List<Integer> parsePartNumbers(List<String> inputLines) {
         List<Integer> partNumbers = new ArrayList<>();
