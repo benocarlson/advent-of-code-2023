@@ -2,7 +2,6 @@ package day2cubeconundrum.part2;
 
 import day2cubeconundrum.CubeGame;
 import day2cubeconundrum.CubeGameParser;
-import day2cubeconundrum.part1.CubeGameValidator;
 import utils.FileUtils;
 
 import java.io.FileNotFoundException;
