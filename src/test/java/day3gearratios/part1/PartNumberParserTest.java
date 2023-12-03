@@ -1,4 +1,4 @@
-package day3gearratios;
+package day3gearratios.part1;
 
 
 import org.junit.jupiter.api.Test;
