@@ -1,10 +1,6 @@
 package day3gearratios.part2;
 
-import utils.FileUtils;
 import utils.ResultPrinter;
-
-import java.io.FileNotFoundException;
-import java.util.List;
 
 public class GearPart2Main {
 
