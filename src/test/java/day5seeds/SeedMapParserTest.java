@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -47,12 +46,53 @@ class SeedMapParserTest {
                     "56 93 4"
     );
 
+    private final SeedMapping expectedMapping = new SeedMapping(
+            List.of(79L, 14L, 55L, 13L),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(50L, 98L, 2L),
+                    new RangeMap.MapRange(52L, 50L, 48L)
+            )),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(0L, 15L, 37L),
+                    new RangeMap.MapRange(37L, 52L, 2L),
+                    new RangeMap.MapRange(39L, 0L, 15L)
+            )),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(49L, 53L, 8L),
+                    new RangeMap.MapRange(0L, 11L, 42L),
+                    new RangeMap.MapRange(42L, 0L, 7L),
+                    new RangeMap.MapRange(57L, 7L, 4L)
+            )),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(88L, 18L, 7L),
+                    new RangeMap.MapRange(18L, 25L, 70L)
+            )),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(45L, 77L, 23L),
+                    new RangeMap.MapRange(81L, 45L, 19L),
+                    new RangeMap.MapRange(68L, 64L, 13L)
+            )),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(0L, 69L, 1L),
+                    new RangeMap.MapRange(1L, 0L, 69L)
+            )),
+            new RangeMap(List.of(
+                    new RangeMap.MapRange(60L, 56L, 37L),
+                    new RangeMap.MapRange(56L, 93L, 4L)
+            ))
+    );
+
     private SeedMapping mapping;
 
     @BeforeEach
     public void setup() {
         mapping = new SeedMapParser().parseSeedMapping(testLines);
         assertThat(mapping).isNotNull();
+    }
+
+    @Test
+    public void parserMatchesExpected() {
+        assertThat(mapping).isEqualTo(expectedMapping);
     }
 
     @Test
@@ -85,7 +125,7 @@ class SeedMapParserTest {
     @Test
     public void parserParsesWaterToLightMap() {
         assertRange(88L, 18L, 7L, mapping.waterToLight(), "Water to Light Map Range 1");
-        assertRange(18L, 25L, 4L, mapping.waterToLight(), "Water to Light Map Range 2");
+        assertRange(18L, 25L, 70L, mapping.waterToLight(), "Water to Light Map Range 2");
     }
 
     @Test
@@ -107,14 +147,13 @@ class SeedMapParserTest {
         assertRange(56L, 93L, 4L, mapping.humidityToLocation(), "Humid to Loc Map Range 2");
     }
 
-    private void assertRange(long valueStart, long keyStart, long rangeLength, Map<Long, Long> map, String logString) {
+    private void assertRange(long valueStart, long keyStart, long rangeLength, RangeMap map, String logString) {
         System.out.println(logString);
         long i = valueStart;
         long j = keyStart;
         long k = 0;
         while (k < rangeLength) {
-            assertThat(map)
-                    .containsEntry(j, i);
+            assertThat(map.get(j)).isEqualTo(i);
             k++;
             i++;
             j++;

@@ -6,13 +6,13 @@ public class LocationMinimizer {
 
     public long getLowestLocationForSeeds(SeedMapping mapping) {
         return mapping.seeds().stream()
-                .map(seed -> mapping.seedToSoil().getOrDefault(seed, seed))
-                .map(soil -> mapping.soilToFertilizer().getOrDefault(soil, soil))
-                .map(fert -> mapping.fertilizerToWater().getOrDefault(fert, fert))
-                .map(water -> mapping.waterToLight().getOrDefault(water, water))
-                .map(light -> mapping.lightToTemperature().getOrDefault(light, light))
-                .map(temp -> mapping.temperatureToHumidity().getOrDefault(temp, temp))
-                .map(humid -> mapping.humidityToLocation().getOrDefault(humid, humid))
+                .map(seed -> mapping.seedToSoil().get(seed))
+                .map(soil -> mapping.soilToFertilizer().get(soil))
+                .map(fert -> mapping.fertilizerToWater().get(fert))
+                .map(water -> mapping.waterToLight().get(water))
+                .map(light -> mapping.lightToTemperature().get(light))
+                .map(temp -> mapping.temperatureToHumidity().get(temp))
+                .map(humid -> mapping.humidityToLocation().get(humid))
                 .min(Long::compareTo)
                 .orElseThrow();
     }

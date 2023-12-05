@@ -36,25 +36,16 @@ public class SeedMapParser {
                 .toList();
     }
 
-    private Map<Long, Long> parseMap(List<String> rangeDefinitions) {
-        Map<Long, Long> resultMap = new HashMap<>();
+    private RangeMap parseMap(List<String> rangeDefinitions) {
+        List<RangeMap.MapRange> ranges = new ArrayList<>();
         for (String definition : rangeDefinitions) {
             String[] values = definition.strip().split("\\s+");
-            long targetStart = Long.parseLong(values[0]);
-            long sourceStart = Long.parseLong(values[1]);
+            long valueStart = Long.parseLong(values[0]);
+            long keyStart = Long.parseLong(values[1]);
             long rangeLength = Long.parseLong(values[2]);
-
-            long i = targetStart;
-            long j = sourceStart;
-            int k = 0;
-            while (k < rangeLength) {
-                resultMap.put(j, i);
-                k++;
-                i++;
-                j++;
-            }
+            ranges.add(new RangeMap.MapRange(valueStart, keyStart, rangeLength));
         }
-        return resultMap;
+        return new RangeMap(ranges);
     }
 
     private List<String> getRangeDefinitions(List<String> inputLines, String indicator) {

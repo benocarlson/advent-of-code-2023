@@ -1,6 +1,7 @@
 package day5seeds;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class RangeMap {
@@ -26,6 +27,19 @@ public class RangeMap {
         public Long get(Long key) {
             return (key - keyStart) + valueStart;
         }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            MapRange mapRange = (MapRange) o;
+            return Objects.equals(valueStart, mapRange.valueStart) && Objects.equals(keyStart, mapRange.keyStart) && Objects.equals(rangeLength, mapRange.rangeLength);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(valueStart, keyStart, rangeLength);
+        }
     }
 
     private final List<MapRange> mapRanges;
@@ -43,4 +57,16 @@ public class RangeMap {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RangeMap rangeMap = (RangeMap) o;
+        return Objects.equals(mapRanges, rangeMap.mapRanges);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mapRanges);
+    }
 }
