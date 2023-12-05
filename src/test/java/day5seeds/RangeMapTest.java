@@ -1,9 +1,15 @@
 package day5seeds;
 
+import day5seeds.part2.SeedRange;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.List;
+import java.util.stream.Stream;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RangeMapTest {
@@ -48,6 +54,66 @@ class RangeMapTest {
         assertThat(rangeMap.get(29L)).isEqualTo(39L);
         assertThat(rangeMap.get(30L)).isEqualTo(30L);
         assertThat(rangeMap.get(31L)).isEqualTo(31L);
+    }
+
+    public static Stream<Arguments> mapRangeSource() {
+        RangeMap.MapRange defaultMapRange = new RangeMap.MapRange(20L, 10L, 10L);
+        return Stream.of(
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(15, 10),
+                        new SeedRange(25, 5),
+                        List.of(new SeedRange(20, 5))
+                ),
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(10, 10),
+                        new SeedRange(20, 10),
+                        emptyList()
+                ),
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(13, 5),
+                        new SeedRange(23, 5),
+                        emptyList()
+                ),
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(5, 10),
+                        new SeedRange(20, 5),
+                        List.of(new SeedRange(5, 5))
+                ),
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(0, 5),
+                        null,
+                        List.of(new SeedRange(0, 5))
+                ),
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(5, 20),
+                        new SeedRange(20, 10),
+                        List.of(new SeedRange(5, 5),
+                                new SeedRange(20, 5))
+                ),
+                Arguments.of(
+                        defaultMapRange,
+                        new SeedRange(25, 10),
+                        null,
+                        List.of(new SeedRange(25, 10))
+                )
+        );
+    }
+
+
+
+    @ParameterizedTest
+    @MethodSource("mapRangeSource")
+    public void mapRangeGetsForRange(RangeMap.MapRange mapRange, SeedRange keyRange, SeedRange expectedResult, List<SeedRange> expectedUnclaimed) {
+        RangeMap.MapRange.RangeClaim resultRange = mapRange.getForRange(keyRange);
+
+        assertThat(resultRange.valueRange()).isEqualTo(expectedResult);
+        assertThat(resultRange.unclaimedRanges()).isEqualTo(expectedUnclaimed);
     }
 
 }

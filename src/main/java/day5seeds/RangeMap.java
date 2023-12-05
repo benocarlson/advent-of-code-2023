@@ -1,5 +1,8 @@
 package day5seeds;
 
+import day5seeds.part2.SeedRange;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -28,6 +31,32 @@ public class RangeMap {
             return (key - keyStart) + valueStart;
         }
 
+        public RangeClaim getForRange(SeedRange keyRange) {
+            List<SeedRange> unclaimedRanges = new ArrayList<>();
+
+            long overlapStart = keyRange.startSeed();
+            if (keyRange.startSeed() < keyStart) {
+                overlapStart = keyStart;
+                unclaimedRanges.add(new SeedRange(keyRange.startSeed(), keyStart - keyRange.startSeed()));
+            }
+            long overlapEnd = keyRange.startSeed() + keyRange.rangeLength();
+            if (overlapEnd > keyStart + rangeLength) {
+                overlapEnd = keyStart + rangeLength;
+                unclaimedRanges.add(new SeedRange(overlapEnd, keyRange.startSeed() + keyRange.rangeLength() - overlapEnd));
+            }
+            long overlapLength = overlapEnd - overlapStart;
+
+            if (overlapLength > 0) {
+                return new RangeClaim(new SeedRange(get(overlapStart), overlapLength), unclaimedRanges);
+            }
+            else {
+                return new RangeClaim(null, List.of(keyRange));
+            }
+
+        }
+
+        public record RangeClaim(SeedRange valueRange, List<SeedRange> unclaimedRanges){}
+
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -55,6 +84,29 @@ public class RangeMap {
         else {
             return key;
         }
+    }
+
+    public List<SeedRange> getForRanges(List<SeedRange> keyRanges) {
+        List<SeedRange> valueRanges = new ArrayList<>();
+        List<SeedRange> unclaimedRanges = new ArrayList<>(keyRanges);
+
+        for (MapRange mapRange : this.mapRanges) {
+            List<SeedRange> unclaimedThisPass = new ArrayList<>();
+            for (SeedRange range : unclaimedRanges) {
+                MapRange.RangeClaim claim = mapRange.getForRange(range);
+                if (claim.valueRange != null) {
+                    valueRanges.add(claim.valueRange);
+                }
+                if (!claim.unclaimedRanges.isEmpty()) {
+                    unclaimedThisPass.addAll(claim.unclaimedRanges);
+                }
+            }
+            unclaimedRanges = unclaimedThisPass;
+        }
+
+        valueRanges.addAll(unclaimedRanges);
+
+        return valueRanges;
     }
 
     @Override
