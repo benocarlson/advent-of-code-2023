@@ -57,7 +57,7 @@ class LocationMinimizerTest {
 
     @Test
     public void locationMinimizerGetsCorrectLocation() {
-        int result = new LocationMinimizer().getLowestLocationForSeeds(mapping);
+        long result = new LocationMinimizer().getLowestLocationForSeeds(mapping);
 
         assertThat(result).isEqualTo(35);
     }

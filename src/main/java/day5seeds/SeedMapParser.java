@@ -26,26 +26,26 @@ public class SeedMapParser {
                 parseMap(getRangeDefinitions(inputLines, HUMIDITY_TO_LOCATION_INDICATOR)));
     }
 
-    private List<Integer> parseSeedList(String seedLine) {
+    private List<Long> parseSeedList(String seedLine) {
         return Arrays.stream(
                 seedLine
                         .substring(SEED_PREFIX.length())
                         .strip()
                         .split("\\s+"))
-                .map(Integer::parseInt)
+                .map(Long::parseLong)
                 .toList();
     }
 
-    private Map<Integer, Integer> parseMap(List<String> rangeDefinitions) {
-        Map<Integer, Integer> resultMap = new HashMap<>();
+    private Map<Long, Long> parseMap(List<String> rangeDefinitions) {
+        Map<Long, Long> resultMap = new HashMap<>();
         for (String definition : rangeDefinitions) {
             String[] values = definition.strip().split("\\s+");
-            int targetStart = Integer.parseInt(values[0]);
-            int sourceStart = Integer.parseInt(values[1]);
-            int rangeLength = Integer.parseInt(values[2]);
+            long targetStart = Long.parseLong(values[0]);
+            long sourceStart = Long.parseLong(values[1]);
+            long rangeLength = Long.parseLong(values[2]);
 
-            int i = targetStart;
-            int j = sourceStart;
+            long i = targetStart;
+            long j = sourceStart;
             int k = 0;
             while (k < rangeLength) {
                 resultMap.put(j, i);

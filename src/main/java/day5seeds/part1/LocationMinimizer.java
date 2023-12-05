@@ -4,7 +4,7 @@ import day5seeds.SeedMapping;
 
 public class LocationMinimizer {
 
-    public int getLowestLocationForSeeds(SeedMapping mapping) {
+    public long getLowestLocationForSeeds(SeedMapping mapping) {
         return mapping.seeds().stream()
                 .map(seed -> mapping.seedToSoil().getOrDefault(seed, seed))
                 .map(soil -> mapping.soilToFertilizer().getOrDefault(soil, soil))
@@ -13,7 +13,7 @@ public class LocationMinimizer {
                 .map(light -> mapping.lightToTemperature().getOrDefault(light, light))
                 .map(temp -> mapping.temperatureToHumidity().getOrDefault(temp, temp))
                 .map(humid -> mapping.humidityToLocation().getOrDefault(humid, humid))
-                .min(Integer::compareTo)
+                .min(Long::compareTo)
                 .orElseThrow();
     }
 }
