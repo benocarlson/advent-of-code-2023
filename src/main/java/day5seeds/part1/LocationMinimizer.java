@@ -1,7 +1,5 @@
 package day5seeds.part1;
 
-import day5seeds.SeedMapping;
-
 public class LocationMinimizer {
 
     public long getLowestLocationForSeeds(SeedMapping mapping) {

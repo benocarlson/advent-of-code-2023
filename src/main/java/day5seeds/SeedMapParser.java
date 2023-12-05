@@ -1,5 +1,9 @@
 package day5seeds;
 
+import day5seeds.part1.SeedMapping;
+import day5seeds.part2.SeedRange;
+import day5seeds.part2.SeedRangeMapping;
+
 import java.util.*;
 
 public class SeedMapParser {
@@ -24,6 +28,32 @@ public class SeedMapParser {
                 parseMap(getRangeDefinitions(inputLines, LIGHT_TO_TEMPERATURE_INDICATOR)),
                 parseMap(getRangeDefinitions(inputLines, TEMPERATURE_TO_HUMIDITY_INDICATOR)),
                 parseMap(getRangeDefinitions(inputLines, HUMIDITY_TO_LOCATION_INDICATOR)));
+    }
+
+    public SeedRangeMapping parseSeedRangeMapping(List<String> inputLines) {
+        return new SeedRangeMapping(
+                parseSeedRanges(inputLines.get(0)),
+                parseMap(getRangeDefinitions(inputLines, SEED_TO_SOIL_INDICATOR)),
+                parseMap(getRangeDefinitions(inputLines, SOIL_TO_FERTILIZER_INDICATOR)),
+                parseMap(getRangeDefinitions(inputLines, FERTILIZER_TO_WATER_INDICATOR)),
+                parseMap(getRangeDefinitions(inputLines, WATER_TO_LIGHT_INDICATOR)),
+                parseMap(getRangeDefinitions(inputLines, LIGHT_TO_TEMPERATURE_INDICATOR)),
+                parseMap(getRangeDefinitions(inputLines, TEMPERATURE_TO_HUMIDITY_INDICATOR)),
+                parseMap(getRangeDefinitions(inputLines, HUMIDITY_TO_LOCATION_INDICATOR)));
+    }
+
+    private List<SeedRange> parseSeedRanges(String seedLine) {
+        List<SeedRange> rangeList = new ArrayList<>();
+        List<Long> seedNumbers = parseSeedList(seedLine);
+
+        int i = 0;
+        while (i < seedNumbers.size()) {
+            rangeList.add(new SeedRange(seedNumbers.get(i), seedNumbers.get(i + 1)));
+
+            i += 2;
+        }
+
+        return rangeList;
     }
 
     private List<Long> parseSeedList(String seedLine) {

@@ -1,7 +1,6 @@
 package day5seeds.part1;
 
 import day5seeds.RangeMap;
-import day5seeds.SeedMapping;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

@@ -1,4 +1,6 @@
-package day5seeds;
+package day5seeds.part1;
+
+import day5seeds.RangeMap;
 
 import java.util.List;
 

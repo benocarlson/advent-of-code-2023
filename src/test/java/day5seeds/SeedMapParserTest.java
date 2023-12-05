@@ -1,6 +1,9 @@
 package day5seeds;
 
 
+import day5seeds.part1.SeedMapping;
+import day5seeds.part2.SeedRange;
+import day5seeds.part2.SeedRangeMapping;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -82,6 +85,18 @@ class SeedMapParserTest {
             ))
     );
 
+    private final SeedRangeMapping expectedSeedRangeMapping = new SeedRangeMapping(
+            List.of(new SeedRange(79L, 14L), new SeedRange(55L, 13L)),
+                    expectedMapping.seedToSoil(),
+                    expectedMapping.soilToFertilizer(),
+                    expectedMapping.fertilizerToWater(),
+                    expectedMapping.waterToLight(),
+                    expectedMapping.lightToTemperature(),
+                    expectedMapping.temperatureToHumidity(),
+                    expectedMapping.humidityToLocation()
+            );
+
+
     private SeedMapping mapping;
 
     @BeforeEach
@@ -91,8 +106,14 @@ class SeedMapParserTest {
     }
 
     @Test
-    public void parserMatchesExpected() {
+    public void parserParsesSeedMappingCorrectly() {
         assertThat(mapping).isEqualTo(expectedMapping);
+    }
+
+    @Test
+    public void parserParsesSeedRangeMappingCorrectly() {
+        SeedRangeMapping rangeMapping = new SeedMapParser().parseSeedRangeMapping(testLines);
+        assertThat(rangeMapping).isEqualTo(expectedSeedRangeMapping);
     }
 
     @Test
