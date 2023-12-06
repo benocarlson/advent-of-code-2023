@@ -29,4 +29,12 @@ class FactorCounterTest {
         assertThat(result).isEqualTo(288);
     }
 
+    @Test
+    public void factorCountForSingleRaceIsCorrect() {
+        Integer result = new FactorCounter().getFactorCountForSingleRace(
+                new RaceRecord(71530, 940200)
+        );
+        assertThat(result).isEqualTo(71503);
+    }
+
 }
