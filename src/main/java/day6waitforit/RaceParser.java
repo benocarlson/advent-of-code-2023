@@ -18,4 +18,11 @@ public class RaceParser {
         }
         return raceRecords;
     }
+
+    public RaceRecord parseSingleRecord(List<String> inputLines) {
+        String distance = inputLines.get(1).substring(DISTANCE_PREFIX.length()).replaceAll("\\s", "");
+        String time = inputLines.get(0).substring(TIME_PREFIX.length()).replaceAll("\\s", "");
+
+        return new RaceRecord(Integer.parseInt(time), Integer.parseInt(distance));
+    }
 }

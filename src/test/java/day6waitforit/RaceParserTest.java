@@ -23,4 +23,10 @@ class RaceParserTest {
         );
     }
 
+    @Test
+    public void raceParserParsesSingleRace() {
+        RaceRecord result = new RaceParser().parseSingleRecord(testLines);
+        assertThat(result).isEqualTo(new RaceRecord(71530, 940200));
+    }
+
 }
