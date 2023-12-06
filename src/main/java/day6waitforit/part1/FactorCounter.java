@@ -19,4 +19,10 @@ public class FactorCounter {
         }
         return factorCounts;
     }
+
+    public Integer multiplyFactorsForRaces(List<RaceRecord> races) {
+        return countFactorsForRaces(races).stream()
+                .mapToInt(val -> val)
+                .reduce(1, (x, y) -> x * y);
+    }
 }

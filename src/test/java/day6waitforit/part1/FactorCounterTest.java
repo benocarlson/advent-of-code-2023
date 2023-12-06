@@ -23,4 +23,10 @@ class FactorCounterTest {
         );
     }
 
+    @Test
+    public void countMultiplierCorrectlyReduces() {
+        Integer result = new FactorCounter().multiplyFactorsForRaces(testRaces);
+        assertThat(result).isEqualTo(288);
+    }
+
 }
