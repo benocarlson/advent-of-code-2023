@@ -1,4 +1,4 @@
 package day6waitforit;
 
-public record RaceRecord(Integer time, Integer recordDistance) {
+public record RaceRecord(Long time, Long recordDistance) {
 }

@@ -13,7 +13,7 @@ public class RaceParser {
         String[] distances = inputLines.get(1).substring(DISTANCE_PREFIX.length()).strip().split("\\s+");
         for (int i = 0; i < times.length; i++) {
             raceRecords.add(
-                    new RaceRecord(Integer.parseInt(times[i]), Integer.parseInt(distances[i]))
+                    new RaceRecord(Long.parseLong(times[i]), Long.parseLong(distances[i]))
             );
         }
         return raceRecords;
@@ -23,6 +23,6 @@ public class RaceParser {
         String distance = inputLines.get(1).substring(DISTANCE_PREFIX.length()).replaceAll("\\s", "");
         String time = inputLines.get(0).substring(TIME_PREFIX.length()).replaceAll("\\s", "");
 
-        return new RaceRecord(Integer.parseInt(time), Integer.parseInt(distance));
+        return new RaceRecord(Long.parseLong(time), Long.parseLong(distance));
     }
 }

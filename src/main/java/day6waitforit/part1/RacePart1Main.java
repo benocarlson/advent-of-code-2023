@@ -9,7 +9,7 @@ public class RacePart1Main {
         FactorCounter counter = new FactorCounter();
         RaceParser parser = new RaceParser();
 
-        ResultPrinter.printResult(FILE_NAME,
+        ResultPrinter.printLongResult(FILE_NAME,
                 inputLines -> counter.multiplyFactorsForRaces(parser.parseRaceRecords(inputLines)));
     }
 }

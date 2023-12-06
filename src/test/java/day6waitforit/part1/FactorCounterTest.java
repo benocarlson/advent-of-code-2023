@@ -10,29 +10,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 class FactorCounterTest {
 
     private static final List<RaceRecord> testRaces = List.of(
-            new RaceRecord(7, 9),
-            new RaceRecord(15, 40),
-            new RaceRecord(30, 200)
+            new RaceRecord(7L, 9L),
+            new RaceRecord(15L, 40L),
+            new RaceRecord(30L, 200L)
     );
 
     @Test
     public void factorCounterGetsCorrectFactorCount() {
-        List<Integer> result = new FactorCounter().countFactorsForRaces(testRaces);
+        List<Long> result = new FactorCounter().countFactorsForRaces(testRaces);
         assertThat(result).containsExactly(
-                4, 8, 9
+                4L, 8L, 9L
         );
     }
 
     @Test
     public void countMultiplierCorrectlyReduces() {
-        Integer result = new FactorCounter().multiplyFactorsForRaces(testRaces);
+        Long result = new FactorCounter().multiplyFactorsForRaces(testRaces);
         assertThat(result).isEqualTo(288);
     }
 
     @Test
     public void factorCountForSingleRaceIsCorrect() {
-        Integer result = new FactorCounter().getFactorCountForSingleRace(
-                new RaceRecord(71530, 940200)
+        Long result = new FactorCounter().getFactorCountForSingleRace(
+                new RaceRecord(71530L, 940200L)
         );
         assertThat(result).isEqualTo(71503);
     }
