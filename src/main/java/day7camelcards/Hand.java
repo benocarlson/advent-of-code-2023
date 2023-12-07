@@ -34,7 +34,8 @@ public class Hand implements Comparable<Hand> {
         FIVE('5', 4),
         FOUR('4', 3),
         THREE('3', 2),
-        TWO('2', 1);
+        TWO('2', 1),
+        JOKER('J', 0);
 
         final char id;
         final int strength;
@@ -43,7 +44,10 @@ public class Hand implements Comparable<Hand> {
             this.strength = strength;
         }
 
-        public static Card byId(char id) {
+        public static Card byId(char id, boolean useJokers) {
+            if (id == 'J') {
+                return useJokers ? JOKER : JACK;
+            }
             return Arrays.stream(Card.values())
                     .filter(card -> card.id == id)
                     .findFirst()
@@ -55,13 +59,13 @@ public class Hand implements Comparable<Hand> {
     private final List<Card> cards;
     private final int bid;
 
-    public Hand(String cardString, int bid) {
+    public Hand(String cardString, int bid, boolean useJokers) {
         if (cardString.length() != HAND_SIZE) {
             throw new IllegalArgumentException("Invalid card string");
         }
         List<Card> cards = new ArrayList<>();
         for (int i = 0; i < HAND_SIZE; i++) {
-            cards.add(Card.byId(cardString.charAt(i)));
+            cards.add(Card.byId(cardString.charAt(i), useJokers));
         }
         this.handType = calculateHandType(cards);
         this.cards = cards;
@@ -96,20 +100,26 @@ public class Hand implements Comparable<Hand> {
 
     private static HandType calculateHandType(List<Card> cards) {
         Map<Card, Integer> cardCounts = new HashMap<>();
+        int jokerCount = 0;
         for (Card card : cards) {
-            cardCounts.putIfAbsent(card, 0);
-            cardCounts.put(card, cardCounts.get(card) + 1);
+            if (card == Card.JOKER) {
+                jokerCount++;
+            }
+            else {
+                cardCounts.putIfAbsent(card, 0);
+                cardCounts.put(card, cardCounts.get(card) + 1);
+            }
         }
-        if (isFiveOfAKind(cardCounts.values())) {
+        if (isFiveOfAKind(cardCounts.values(), jokerCount)) {
             return HandType.FIVE_OF_A_KIND;
         }
-        if (isFourOfAKind(cardCounts.values())) {
+        if (isFourOfAKind(cardCounts.values(), jokerCount)) {
             return HandType.FOUR_OF_A_KIND;
         }
-        if (isFullHouse(cardCounts.values())) {
+        if (isFullHouse(cardCounts.values(), jokerCount)) {
             return HandType.FULL_HOUSE;
         }
-        if (isThreeOfAKind(cardCounts.values())) {
+        if (isThreeOfAKind(cardCounts.values(), jokerCount)) {
             return HandType.THREE_OF_A_KIND;
         }
         if (isTwoPair(cardCounts.values())) {
@@ -121,17 +131,18 @@ public class Hand implements Comparable<Hand> {
         return HandType.HIGH_CARD;
     }
 
-    private static boolean isFiveOfAKind(Collection<Integer> cardCounts) {
-        return cardCounts.contains(5);
+    private static boolean isFiveOfAKind(Collection<Integer> cardCounts, int jokerCount) {
+        return cardCounts.stream().anyMatch(val -> val + jokerCount == 5) || jokerCount == 5;
     }
-    private static boolean isFourOfAKind(Collection<Integer> cardCounts) {
-        return cardCounts.contains(4);
+    private static boolean isFourOfAKind(Collection<Integer> cardCounts, int jokerCount) {
+        return cardCounts.stream().anyMatch(val -> val + jokerCount == 4);
     }
-    private static boolean isFullHouse(Collection<Integer> cardCounts) {
-        return cardCounts.contains(3) && cardCounts.contains(2);
+    private static boolean isFullHouse(Collection<Integer> cardCounts, int jokerCount) {
+        return (cardCounts.contains(3) && cardCounts.contains(2)) ||
+                (cardCounts.stream().allMatch(val -> val == 2) && jokerCount == 1);
     }
-    private static boolean isThreeOfAKind(Collection<Integer> cardCounts) {
-        return cardCounts.contains(3) && !cardCounts.contains(2);
+    private static boolean isThreeOfAKind(Collection<Integer> cardCounts, int jokerCount) {
+        return cardCounts.stream().anyMatch(val -> val + jokerCount == 3);
     }
     private static boolean isTwoPair(Collection<Integer> cardCounts) {
         return cardCounts.size() == 3 && cardCounts.contains(2);

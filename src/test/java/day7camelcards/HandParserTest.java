@@ -21,11 +21,11 @@ class HandParserTest {
         List<Hand> hands = new HandParser().parseHands(testLines);
 
         assertThat(hands).containsExactly(
-                new Hand("32T3K", 765),
-                new Hand("T55J5", 684),
-                new Hand("KK677", 28),
-                new Hand("KTJJT", 220),
-                new Hand("QQQJA", 483)
+                new Hand("32T3K", 765, false),
+                new Hand("T55J5", 684, false),
+                new Hand("KK677", 28, false),
+                new Hand("KTJJT", 220, false),
+                new Hand("QQQJA", 483, false)
         );
     }
 

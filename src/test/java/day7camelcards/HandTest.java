@@ -57,7 +57,7 @@ class HandTest {
     @ParameterizedTest
     @MethodSource("handSource")
     public void handConstructsWithString(String cardString, List<Hand.Card> expectedCardList, Hand.HandType expectedType) {
-        Hand hand = new Hand(cardString, 10);
+        Hand hand = new Hand(cardString, 10, false);
 
         assertThat(hand.getCards()).isEqualTo(expectedCardList);
         assertThat(hand.getHandType()).isEqualTo(expectedType);
@@ -66,34 +66,73 @@ class HandTest {
     @Test
     public void handsOrderCorrectly() {
         List<Hand> handList = new java.util.ArrayList<>(List.of(
-                new Hand("AAAAA", 0),
-                new Hand("AKQJT", 0),
-                new Hand("AKKJT", 0),
-                new Hand("ATTJT", 0),
-                new Hand("ATAT6", 0),
-                new Hand("33332", 0),
-                new Hand("TT999", 0),
-                new Hand("23456", 0),
-                new Hand("TTT99", 0),
-                new Hand("AKQJ9", 0),
-                new Hand("ATT4T", 0),
-                new Hand("A6AT6", 0)
+                new Hand("AAAAA", 0, false),
+                new Hand("AKQJT", 0, false),
+                new Hand("AKKJT", 0, false),
+                new Hand("ATTJT", 0, false),
+                new Hand("ATAT6", 0, false),
+                new Hand("33332", 0, false),
+                new Hand("TT999", 0, false),
+                new Hand("23456", 0, false),
+                new Hand("TTT99", 0, false),
+                new Hand("AKQJ9", 0, false),
+                new Hand("ATT4T", 0, false),
+                new Hand("A6AT6", 0, false)
         ));
 
         handList.sort(Hand::compareTo);
         assertThat(handList).containsExactly(
-                new Hand("23456", 0),
-                new Hand("AKQJ9", 0),
-                new Hand("AKQJT", 0),
-                new Hand("AKKJT", 0),
-                new Hand("A6AT6", 0),
-                new Hand("ATAT6", 0),
-                new Hand("ATT4T", 0),
-                new Hand("ATTJT", 0),
-                new Hand("TT999", 0),
-                new Hand("TTT99", 0),
-                new Hand("33332", 0),
-                new Hand("AAAAA", 0)
+                new Hand("23456", 0, false),
+                new Hand("AKQJ9", 0, false),
+                new Hand("AKQJT", 0, false),
+                new Hand("AKKJT", 0, false),
+                new Hand("A6AT6", 0, false),
+                new Hand("ATAT6", 0, false),
+                new Hand("ATT4T", 0, false),
+                new Hand("ATTJT", 0, false),
+                new Hand("TT999", 0, false),
+                new Hand("TTT99", 0, false),
+                new Hand("33332", 0, false),
+                new Hand("AAAAA", 0, false)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("jokerSource")
+    public void handConstructsWithJokers(String cardString, List<Hand.Card> expectedCardList, Hand.HandType expectedType) {
+        Hand hand = new Hand(cardString, 10, true);
+
+        assertThat(hand.getCards()).isEqualTo(expectedCardList);
+        assertThat(hand.getHandType()).isEqualTo(expectedType);
+    }
+
+    public static Stream<Arguments> jokerSource() {
+        return Stream.of(
+                Arguments.of(
+                        "555J5",
+                        List.of(FIVE, FIVE, FIVE, JOKER, FIVE),
+                        FIVE_OF_A_KIND
+                ),
+                Arguments.of(
+                        "5J5J5",
+                        List.of(FIVE, JOKER, FIVE, JOKER, FIVE),
+                        FIVE_OF_A_KIND
+                ),
+                Arguments.of(
+                        "5JJJ5",
+                        List.of(FIVE, JOKER, JOKER, JOKER, FIVE),
+                        FIVE_OF_A_KIND
+                ),
+                Arguments.of(
+                        "JJJJ5",
+                        List.of(JOKER, JOKER, JOKER, JOKER, FIVE),
+                        FIVE_OF_A_KIND
+                ),
+                Arguments.of(
+                        "JJJJJ",
+                        List.of(JOKER, JOKER, JOKER, JOKER, JOKER),
+                        FIVE_OF_A_KIND
+                )
         );
     }
 

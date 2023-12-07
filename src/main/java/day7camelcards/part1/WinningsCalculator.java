@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WinningsCalculator {
-    public int calculateWinnings(List<Hand> handList) {
+    public long calculateWinnings(List<Hand> handList) {
         List<Hand> sortedList = new ArrayList<>(handList);
         sortedList.sort(Hand::compareTo);
-        int total = 0;
+        long total = 0;
         for (int i = 0; i < sortedList.size(); i++) {
-            total += sortedList.get(i).getBid() * (i + 1);
+            total += ((long) sortedList.get(i).getBid()) * (i + 1);
         }
         return total;
     }
