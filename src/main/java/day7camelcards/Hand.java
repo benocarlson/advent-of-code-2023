@@ -55,15 +55,6 @@ public class Hand implements Comparable<Hand> {
     private final List<Card> cards;
     private final int bid;
 
-    public Hand(List<Card> cards, int bid) {
-        if (cards.size() != HAND_SIZE) {
-            throw new IllegalArgumentException("Invalid card list");
-        }
-        this.handType = calculateHandType(cards);
-        this.cards = cards;
-        this.bid = bid;
-    }
-
     public Hand(String cardString, int bid) {
         if (cardString.length() != HAND_SIZE) {
             throw new IllegalArgumentException("Invalid card string");
