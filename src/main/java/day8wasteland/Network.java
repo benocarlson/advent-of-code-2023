@@ -1,5 +1,6 @@
 package day8wasteland;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -28,6 +29,31 @@ public class Network {
             }
         }
         return loopCount;
+    }
+
+    public long traverseAsGhost(String path) {
+        List<String> currentPositions = netMap.keySet()
+                .stream()
+                .filter(position -> position.endsWith("A"))
+                .toList();
+
+        int loopCount = 0;
+        while (!allPositionsAreTarget(currentPositions)) {
+            for (int i = 0; i < path.length(); i++) {
+                loopCount++;
+                switch (path.charAt(i)) {
+                    case 'L' -> currentPositions = currentPositions.stream().map(position -> netMap.get(position).left).toList();
+                    case 'R' -> currentPositions = currentPositions.stream().map(position -> netMap.get(position).right).toList();
+                    default -> throw new IllegalArgumentException("Invalid traversal path! Contains " + path.charAt(i) + " at position " + i);
+                }
+                if (allPositionsAreTarget(currentPositions)) break;
+            }
+        }
+        return loopCount;
+    }
+
+    private boolean allPositionsAreTarget(List<String> positions) {
+        return positions.stream().allMatch(position -> position.endsWith("Z"));
     }
 
     public static record Fork(String left, String right) {}

@@ -21,4 +21,20 @@ class NetworkTest {
         assertThat(result).isEqualTo(6);
     }
 
+    @Test
+    public void networkTraversesAsGhostCorrectly() {
+        Network network = new Network(Map.of(
+                "11A", new Network.Fork("11B", "XXX"),
+                "11B", new Network.Fork("XXX", "11Z"),
+                "11Z", new Network.Fork("11B", "XXX"),
+                "22A", new Network.Fork("22B", "XXX"),
+                "22B", new Network.Fork("22C", "22C"),
+                "22C", new Network.Fork("22Z", "22Z"),
+                "22Z", new Network.Fork("22B", "22B"),
+                "XXX", new Network.Fork("XXX", "XXX")
+        ));
+
+        long result = network.traverseAsGhost("LR");
+        assertThat(result).isEqualTo(6);
+    }
 }
