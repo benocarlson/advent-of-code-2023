@@ -1,5 +1,7 @@
 package day8wasteland;
 
+import day8wasteland.part2.NetworkTable;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,5 +26,18 @@ public class NetworkParser {
             netMap.put(key, new Network.Fork(left, right));
         }
         return new Network(netMap);
+    }
+
+    public NetworkTable parseNetworkTable(List<String> inputLines) {
+        Map<String, Network.Fork> netMap = new HashMap<>();
+        for (int i = 2; i < inputLines.size(); i++) {
+            String line = inputLines.get(i);
+            String key = line.substring(KEY_INDEX, KEY_INDEX + 3);
+            String left = line.substring(LEFT_INDEX, LEFT_INDEX + 3);
+            String right = line.substring(RIGHT_INDEX, RIGHT_INDEX + 3);
+            netMap.put(key, new Network.Fork(left, right));
+        }
+
+        return new NetworkTable(netMap, parseTraversalString(inputLines));
     }
 }

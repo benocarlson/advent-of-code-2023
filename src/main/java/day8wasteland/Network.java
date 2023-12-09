@@ -31,32 +31,48 @@ public class Network {
         return loopCount;
     }
 
+    private long traverse(String path, String start) {
+        String current = start;
+        long loopCount = 0;
+        while (!current.endsWith("Z")) {
+            for (int i = 0; i < path.length(); i++) {
+                loopCount++;
+                switch (path.charAt(i)) {
+                    case 'L' -> current = netMap.get(current).left;
+                    case 'R' -> current = netMap.get(current).right;
+                    default -> throw new IllegalArgumentException("Invalid traversal path! Contains " + path.charAt(i) + " at position " + i);
+                }
+                if (current.endsWith("Z")) break;
+            }
+        }
+        return loopCount;
+    }
+
     public long traverseAsGhost(String path) {
         List<String> currentPositions = netMap.keySet()
                 .stream()
                 .filter(position -> position.endsWith("A"))
                 .toList();
 
-        int loopCount = 0;
-        while (!allPositionsAreTarget(currentPositions)) {
-            for (int i = 0; i < path.length(); i++) {
-                loopCount++;
-                switch (path.charAt(i)) {
-                    case 'L' -> currentPositions = currentPositions.stream().map(position -> netMap.get(position).left).toList();
-                    case 'R' -> currentPositions = currentPositions.stream().map(position -> netMap.get(position).right).toList();
-                    default -> throw new IllegalArgumentException("Invalid traversal path! Contains " + path.charAt(i) + " at position " + i);
-                }
-                if (allPositionsAreTarget(currentPositions)) break;
-            }
+        List<Long> individualLoopCounts = currentPositions.stream().map(start -> this.traverse(path, start)).toList();
+
+        return calculateLCM(individualLoopCounts);
+    }
+
+    private long calculateLCM(List<Long> individualLoopCounts) {
+
+        return individualLoopCounts.stream().reduce(1L, (a, b) -> a * b / euclideanGCD(a, b));
+    }
+    private long euclideanGCD(Long a, Long b) {
+        while (b != 0) {
+            long temp = b;
+            b = a % b;
+            a = temp;
         }
-        return loopCount;
+        return a;
     }
 
-    private boolean allPositionsAreTarget(List<String> positions) {
-        return positions.stream().allMatch(position -> position.endsWith("Z"));
-    }
-
-    public static record Fork(String left, String right) {}
+    public record Fork(String left, String right) {}
 
     @Override
     public boolean equals(Object o) {
