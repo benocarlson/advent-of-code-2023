@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PipeParserTest {
 
-    private static List<String> testInputLines = List.of(
+    private static final List<String> testInputLines = List.of(
             "7-F7-",
             ".FJ|7",
             "SJLL7",
@@ -17,7 +17,7 @@ class PipeParserTest {
             "LJ.LJ"
     );
 
-    private static Pipe[][] testPipeArray = new Pipe[][] {
+    private static final Pipe[][] testPipeArray = new Pipe[][] {
             new Pipe[] { SOUTH_WEST, EAST_WEST, SOUTH_EAST, SOUTH_WEST, EAST_WEST },
             new Pipe[] { NONE, SOUTH_EAST, NORTH_WEST, NORTH_SOUTH, SOUTH_WEST },
             new Pipe[] { START, NORTH_WEST, NORTH_EAST, NORTH_EAST, SOUTH_WEST },

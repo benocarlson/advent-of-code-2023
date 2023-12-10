@@ -4,9 +4,7 @@ import day10pipemaze.Pipe;
 import org.junit.jupiter.api.Test;
 
 import static day10pipemaze.Pipe.*;
-import static day10pipemaze.Pipe.NORTH_WEST;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class MazeRunnerTest {
 
