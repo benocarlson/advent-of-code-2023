@@ -4,7 +4,7 @@ import java.util.List;
 
 public enum Pipe {
     NONE,
-    START,
+    START(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST),
     NORTH_WEST(Direction.NORTH, Direction.WEST),
     NORTH_EAST(Direction.NORTH, Direction.EAST),
     SOUTH_WEST(Direction.SOUTH, Direction.WEST),
@@ -12,17 +12,26 @@ public enum Pipe {
     NORTH_SOUTH(Direction.NORTH, Direction.SOUTH),
     EAST_WEST(Direction.EAST, Direction.WEST);
 
-    final List<Direction> directionList;
+    public final List<Direction> directionList;
 
     Pipe(Direction... directions) {
         directionList = List.of(directions);
     }
 
-    enum Direction {
+    public enum Direction {
         NORTH,
         SOUTH,
         EAST,
-        WEST
+        WEST;
+
+        public static Direction reverse(Direction dir) {
+            return switch (dir) {
+                case SOUTH -> NORTH;
+                case NORTH -> SOUTH;
+                case WEST -> EAST;
+                case EAST -> WEST;
+            };
+        }
     }
 
     public static Pipe forChar(char character) {
